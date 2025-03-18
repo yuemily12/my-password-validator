@@ -1,0 +1,25 @@
+# render.yaml
+# A minimal Blueprint that sets up one Python web service using Flask + Gunicorn.
+
+services:
+  - name: my-password-validator   # A human-friendly name for the service
+    type: web                     # "web" means it's publicly accessible
+    runtime: python               # Using Python environment on Render
+    plan: free                    # Use the free instance type (change if you need bigger)
+    branch: main                  # The branch Render will build from (adjust as needed)
+    # Install pipenv and then install dependencies via the Pipfile/Pipfile.lock
+    buildCommand: pip install pipenv && pipenv install --deploy
+    # Run the app using pipenv, which ensures your environment is set correctly.
+    startCommand: pipenv run gunicorn main:app --bind 0.0.0.0:$PORT
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      # If you need environment secrets, see "sync: false" or environment groups in the docs.
+    
+    # Optionally set region (if omitted, defaults to Oregon)
+    # see: https://render.com/docs/regions
+    region: ohio
+
+    # If your repo is different from the default (the same repo that holds this render.yaml),
+    # you can specify the 'repo' field. For example:
+    # repo: https://github.com/<username>/<repo-name>.git
