@@ -14,11 +14,11 @@ This repository contains the starter code for the second part of Penn CIS 3500's
 
 2. Sign-up for an account at [Render.com](https://www.render.com/). For this entire exercise, the free tier is sufficient.
 
-3. Once you are logged in to Render's dashboard, click on the `+ Add new` button and select `Web Service`:
+3. Once you are logged in to Render's dashboard, click on the `+ Add new` button and select `Blueprint`:
 
-    ![Render's dashboard, with the `+ Add new` menu opened and the `Web Service` selected.](http://togetherwe.dev/tutorials/render-dashboard.png)
+    ![Render's dashboard, with the `+ Add new` menu opened and the `Blueprint` selected.](http://togetherwe.dev/tutorials/render-dashboard.png)
 
-4. In the following form, select `Public Git Repository` and choose the repository you forked in step 1. Please note:
+4. In the following form, scroll down, and select `Public Git Repository` and choose the repository you forked in step 1. Please note:
 
     - Render can deploy from a public repository, or, if you connect your GitHub account to Render and provide the necessary permission, from a private repository. Here, for simplicity, we are using the _public repository_ option.
 
