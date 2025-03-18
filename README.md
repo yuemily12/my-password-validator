@@ -94,6 +94,65 @@ The response should be a JSON object with a two keys, `valid`, that is `true` if
 
 Initially all passwords are considered invalid, and the app returns an HTTP status code of 501 (Not Implemented). You should implement the password validation logic in the `main.py` file, and ensure the returned HTTP status code is 200 at all times (even when the password is invalid).
 
+## Creating a Test Suite
+
+1. You can add tests by adding the `pytest` package:
+
+    ```bash
+    pipenv install pytest --dev
+    ```
+
+2. Add your tests to a `test_main.py` file (the tool `pytest` automatically looks for files that start with `test_` or that are in the `tests` directory):
+
+    ```python
+    # test_main.py
+    import pytest
+    from main import app
+
+
+    @pytest.fixture
+    def client():
+        """
+        Pytest fixture that creates a Flask test client from the 'app' in main.py.
+        """
+        with app.test_client() as client:
+            yield client
+
+
+    def test_root_endpoint(client):
+        """
+        Test the GET '/' endpoint to ensure it returns
+        the greeting and a 200 status code.
+        """
+        resp = client.get("/")
+        assert resp.status_code == 200
+        assert b"Hello from my Password Validator!" in resp.data
+
+
+    # Not that this test only makes sense for the starter code,
+    # in practice we would not test for a 501 status code!
+
+    def test_check_password_not_implemented(client):
+        """
+        Test the POST '/v1/checkPassword' endpoint to ensure
+        it returns HTTP 501 (Not Implemented) in the starter code.
+        """
+        resp = client.post("/v1/checkPassword", json={"password": "whatever"})
+        assert resp.status_code == 501
+        data = resp.get_json()
+        assert data.get("reason") == "Not implemented"
+        assert data.get("valid") is False
+    ```
+
+3. You can run them with:
+
+    ```bash
+    pipenv run pytest
+    ```
+
+    This will run all the tests in the `test_main.py` file.
+
+
 ## Credits
 
 The list of banned passwords is from [this repository](https://github.com/danielmiessler/SecLists/blob/master/Passwords/Common-Credentials/10-million-password-list-top-1000.txt).
